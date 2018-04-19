@@ -1,6 +1,23 @@
 # Compiled class file
 *.class
 
+# Json Cucumber generated report files
+automation-test-api.json
+automation-test-gui.json
+
+# Cucumber Report output folder
+Report/
+
+# Screenshot Failures folder
+FailureScreenshots/
+
+# Binaries folder
+Bin/
+target/
+
+# Image files
+*.png
+
 # Log file
 *.log
 
