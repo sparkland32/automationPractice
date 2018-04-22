@@ -20,6 +20,9 @@ public class MyAccountPage extends BasePage {
     @FindBy(className = "sf-menu")
     public WebElement categoryMenu;
     
+    @FindBy(linkText = "Order history and details")
+    public WebElement orderHistoryButton;
+    
     public MyAccountPage(WebDriver driver) {
     		PageFactory.initElements(driver, this);
     }  
@@ -35,5 +38,11 @@ public class MyAccountPage extends BasePage {
     		}
     		
     		return new CategoryPage(driver);
-    }   	    
+    }  
+    
+    public OrderHistoryPage ClickOrderHistoryButton(WebDriver driver) {
+    		orderHistoryButton.click();
+    		
+    		return new OrderHistoryPage(driver);
+    }
 }

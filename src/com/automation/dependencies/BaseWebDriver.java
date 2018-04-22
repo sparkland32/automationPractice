@@ -14,15 +14,21 @@ public abstract class BaseWebDriver {
 	
 	public WebDriver driver;
 	
-	public WebDriver GetDriver(Browser browserType)
+	public WebDriver GetDriver(Browser browserType) throws IOException
 	{
+		String ffMacDriverLocation = PropertiesFileManager.GetProperty("mac_firefox_driver_location");
+		String ffWinDriverLocation = PropertiesFileManager.GetProperty("win_firefox_driver_location");
+		
 		if (browserType.equals(Browser.Chrome))
 		{
 			this.driver = new ChromeDriver();
 		}
 		else if (browserType.equals(Browser.Firefox))
 		{
-			System.setProperty("webdriver.gecko.driver", "src/com/automation/dependencies/geckodriver");
+			if (System.getProperty("os.name").startsWith("Windows"))
+				System.setProperty("webdriver.gecko.driver", ffWinDriverLocation);
+			else
+				System.setProperty("webdriver.gecko.driver", ffMacDriverLocation);
 			this.driver = new FirefoxDriver();
 		}	
 		
@@ -60,7 +66,7 @@ public abstract class BaseWebDriver {
 		try {
 			TakesScreenshot screenShotFromDriver = (TakesScreenshot)driver;
 			File sourceImage = screenShotFromDriver.getScreenshotAs(OutputType.FILE);
-			FileUtils.copyFile(sourceImage, new File("./FailureScreenshots/" + scenario + ".png"));
+			FileUtils.copyFile(sourceImage, new File(PropertiesFileManager.GetProperty("screenshot_output_directory") + scenario + ".png"));
 			return screenShotFromDriver.getScreenshotAs(OutputType.BYTES);
 		}
 		catch (IOException e) {
